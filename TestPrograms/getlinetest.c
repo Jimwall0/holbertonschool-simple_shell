@@ -3,7 +3,7 @@
 
 int main(void)
 {
-	size_t n = 10; /* buffer size */
+	size_t n = 30; /* buffer size */
 	char *buf = malloc(sizeof(char) * n); /*creates buffer */
 
 	printf("Enter name ");
