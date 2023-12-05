@@ -6,11 +6,10 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-int main(int argc, char **argv, char **env)
+int main(int argc __attribute__((unused)), char **argv, char **env)
 {
   char *line = NULL;
   char *command;
-  char *argv[2];
   pid_t pid;
   char *full_path;
   size_t len = 0;
@@ -33,7 +32,7 @@ int main(int argc, char **argv, char **env)
       if (command != NULL)
         {
 	  /*look through the pathway to find the right command*/
-	  full_path = find_executable(command, environ);
+	  full_path = find_executable(command, env);
 	  if (full_path != NULL)
             {
 	      /*sets the command*/
@@ -52,7 +51,7 @@ int main(int argc, char **argv, char **env)
                 {
 		  printf("Command: %s \n", command);
 		  
-		  if (execve(full_path, argv, environ) == -1)
+		  if (execve(full_path, argv, env) == -1)
                     {
 		      perror("Error executing command");
 		      exit(EXIT_FAILURE);
