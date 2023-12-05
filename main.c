@@ -27,9 +27,10 @@ int main(int argc __attribute__((unused)), char **argv, char **env)
 	  break;
         }
       /*splits the the users input*/
-      command = strtok(line, " ");
+      command = strtok(line, " \n");
       if (command != NULL)
         {
+	  /*checks for exit condition*/
 	  if (strcmp(command, "exit") == 0)
 	    {
 	      return (0);
