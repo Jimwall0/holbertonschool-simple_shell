@@ -6,69 +6,74 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-int main(void)
+int main(int argc, char **argv, char **env)
 {
-    char *line = NULL;
-    char *command;
-    char *argv[2];
-    pid_t pid;
-    char *full_path;
-    size_t len = 0;
-    ssize_t read;
-
-    while (1)
+  char *line = NULL;
+  char *command;
+  char *argv[2];
+  pid_t pid;
+  char *full_path;
+  size_t len = 0;
+  ssize_t read;
+  /*keep running the program*/
+  while (1)
     {
-        printf("$ ");
-        read = getline(&line, &len, stdin);
-
-        if (read == -1)
+      /*prompt user*/
+      printf("$ ");
+      read = getline(&line, &len, stdin);
+      
+      if (read == -1)
         {
-            printf("\n");
-            break;
+	  printf("\n");
+	  break;
         }
-
-        command = strtok(line, " \n");
-
-        if (command != NULL)
+      /*splits the the users input*/
+      command = strtok(line, " ");
+      
+      if (command != NULL)
         {
-            full_path = find_executable(command, environ);
-
-            if (full_path != NULL)
+	  /*look through the pathway to find the right command*/
+	  full_path = find_executable(command, environ);
+	  if (full_path != NULL)
             {
-                argv[0] = full_path;
-                argv[1] = NULL;
-
-                pid = fork();
-
-                if (pid == -1)
+	      /*sets the command*/
+	      argv[0] = full_path;
+	      argv[1] = NULL;
+	      /**/
+	      pid = fork();
+	      
+	      if (pid == -1)
                 {
-                    perror("Error forking");
-                    exit(EXIT_FAILURE);
+		  perror("Error forking");
+		  exit(EXIT_FAILURE);
                 }
-
-                if (pid == 0)
+	      
+	      if (pid == 0)
                 {
-                    printf("Command: %s \n", command);
-
-                    if (execve(full_path, argv, environ) == -1)
+		  printf("Command: %s \n", command);
+		  
+		  if (execve(full_path, argv, environ) == -1)
                     {
-                        perror("Error executing command");
-                        exit(EXIT_FAILURE);
+		      perror("Error executing command");
+		      exit(EXIT_FAILURE);
                     }
-                } else
-                {
-                    wait(NULL);
+		  free(full_path);
+		  return (0);
                 }
-
-                free(full_path);
-            } else
+	      else
+                {
+		  wait(NULL);
+                }
+	      free(full_path);
+            }
+	  else
             {
-                fprintf(stderr, "Error: Command not found in PATH.\n");
+	      fprintf(stderr, "Error: Command not found in PATH.\n");
             }
         }
     }
-
-    free(line);
-
-    return 0;
+  
+  free(line);
+  
+  return 0;
 }
