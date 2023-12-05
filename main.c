@@ -30,6 +30,10 @@ int main(int argc __attribute__((unused)), char **argv, char **env)
       command = strtok(line, " ");
       if (command != NULL)
         {
+	  if (strcmp(command, "exit") == 0)
+	    {
+	      return (0);
+	    }
 	  /*look through the pathway to find the right command*/
 	  full_path = find_executable(command, env);
 	  if (full_path != NULL)
@@ -45,11 +49,11 @@ int main(int argc __attribute__((unused)), char **argv, char **env)
 		  perror("Error forking");
 		  exit(EXIT_FAILURE);
                 }
-	      
+	      /*What the child proccess is running*/
 	      if (pid == 0)
                 {
 		  printf("Command: %s \n", command);
-		  
+		  /*runs a program then terminates itself*/
 		  if (execve(full_path, argv, env) == -1)
                     {
 		      perror("Error executing command");
@@ -58,6 +62,7 @@ int main(int argc __attribute__((unused)), char **argv, char **env)
 		  free(full_path);
 		  return (0);
                 }
+	      /*The parent process wait for the child to terminate*/
 	      else
                 {
 		  wait(NULL);
@@ -66,6 +71,10 @@ int main(int argc __attribute__((unused)), char **argv, char **env)
             }
 	  else
             {
+	      if (strcmp(command, "exit") == 0)
+		{
+		  return (0);
+		}
 	      fprintf(stderr, "Error: Command not found in PATH.\n");
             }
         }
