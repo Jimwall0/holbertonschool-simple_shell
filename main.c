@@ -28,7 +28,6 @@ int main(int argc __attribute__((unused)), char **argv, char **env)
         }
       /*splits the the users input*/
       command = strtok(line, " ");
-      
       if (command != NULL)
         {
 	  /*look through the pathway to find the right command*/
@@ -38,7 +37,7 @@ int main(int argc __attribute__((unused)), char **argv, char **env)
 	      /*sets the command*/
 	      argv[0] = full_path;
 	      argv[1] = NULL;
-	      /**/
+	      /*starts the child proccess*/
 	      pid = fork();
 	      
 	      if (pid == -1)
