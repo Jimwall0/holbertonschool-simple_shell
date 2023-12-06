@@ -1,74 +1,48 @@
-#include "shell.h"
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 #include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
+#include "shell.h"
 
 int main(void)
 {
-    char *line = NULL;
-    char *command;
-    char *argv[2];
-    pid_t pid;
-    char *full_path;
-    size_t len = 0;
-    ssize_t read;
+	size_t buffsize = 1024;
+	char *inputbuff = malloc(buffsize * sizeof(char));
+	char *path = NULL;
+	char **tokens = NULL;
+	char **pathtok = NULL;
+	extern char **environ;
 
-    while (1)
-    {
-        printf("$ ");
-        read = getline(&line, &len, stdin);
+	path = findpath(environ);
+	pathtok = maketoken(path, ":");
 
-        if (read == -1)
-        {
-            printf("\n");
-            break;
-        }
+	if (inputbuff == NULL)
+	{
+		perror("Buffer allocation failed");
+		exit(1);
+	}
+	while (1)
+	{
+		printf("$ ");
+		getline(&inputbuff, &buffsize, stdin); /* takes input from stdin and stores */
 
-        command = strtok(line, " \n");
+		if (feof(stdin) != 0) /* checks for EoF condition */
+			break;
 
-        if (command != NULL)
-        {
-            full_path = find_executable(command, environ);
+		inputbuff[strcspn(inputbuff, "\n")] = '\0'; /* removes newline from input */
 
-            if (full_path != NULL)
-            {
-                argv[0] = full_path;
-                argv[1] = NULL;
+		if (strcmp(inputbuff, "exit") == 0)
+		{
+			break; /* exit loop if 'exit' is entered as input */
+		}
 
-                pid = fork();
+		tokens = maketoken(inputbuff, " "); /* tokenize input */
 
-                if (pid == -1)
-                {
-                    perror("Error forking");
-                    exit(EXIT_FAILURE);
-                }
+		forkandexec(pathtok, tokens);
+	}
 
-                if (pid == 0)
-                {
-                    printf("Command: %s \n", command);
+	free(inputbuff);
+	free_array(pathtok);
 
-                    if (execve(full_path, argv, environ) == -1)
-                    {
-                        perror("Error executing command");
-                        exit(EXIT_FAILURE);
-                    }
-                } else
-                {
-                    wait(NULL);
-                }
-
-                free(full_path);
-            } else
-            {
-                fprintf(stderr, "Error: Command not found in PATH.\n");
-            }
-        }
-    }
-
-    free(line);
-
-    return 0;
+	return(0);
 }
