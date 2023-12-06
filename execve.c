@@ -4,7 +4,11 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include "shell.h"
-
+/**
+ * forkandexec - function that forks CID and executes command
+ * @pathtok: an array of strings containing the PATH env variable
+ * @tokens: array of strings containing the tokenized command input
+ */
 void forkandexec(char **pathtok, char **tokens)
 {
 	pid_t cpid;
@@ -38,7 +42,7 @@ void forkandexec(char **pathtok, char **tokens)
 			i++; /* increments to next element in path array */
 		}
 
-	fprintf(stderr, "Command not found: %s\n", tokens[0]); /* executable not found */
+	fprintf(stderr, "Command not found: %s\n", tokens[0]);
 	exit(1);
 	}
 	else

@@ -3,7 +3,11 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "shell.h"
-
+/**
+ * main - main function for simple shell program
+ *
+ * Return: 0 on successful execution of command
+ */
 int main(void)
 {
 	size_t buffsize = 1024;
@@ -11,7 +15,6 @@ int main(void)
 	char *path = NULL;
 	char **tokens = NULL;
 	char **pathtok = NULL;
-	extern char **environ;
 
 	path = findpath(environ);
 	pathtok = maketoken(path, ":");
@@ -24,7 +27,7 @@ int main(void)
 	while (1)
 	{
 		printf("$ ");
-		getline(&inputbuff, &buffsize, stdin); /* takes input from stdin and stores */
+		getline(&inputbuff, &buffsize, stdin); /* take input from stdin and stores */
 
 		if (feof(stdin) != 0) /* checks for EoF condition */
 			break;
@@ -44,5 +47,5 @@ int main(void)
 	free(inputbuff);
 	free_array(pathtok);
 
-	return(0);
+	return (0);
 }

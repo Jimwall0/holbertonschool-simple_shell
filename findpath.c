@@ -3,7 +3,11 @@
 #include <unistd.h>
 #include <string.h>
 #include "shell.h"
-
+/**
+ * findpath - function that finds / copies path variable
+ * @env: array of strings representing environment vars
+ * Return: PATH string, or NULL if not found
+ */
 char *findpath(char **env)
 {
 	int i = 0;
