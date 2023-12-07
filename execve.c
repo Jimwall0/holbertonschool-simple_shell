@@ -27,15 +27,27 @@ void forkandexec(char **pathtok, char **tokens)
 	{
 		while (pathtok[i] != NULL)
 		{
-			strncpy(temp_path, pathtok[i], sizeof(temp_path) - 1); /* copies path */
-			temp_path[sizeof(temp_path) - 1] = '\0'; /* null terminates */
-			len = strlen(temp_path);
-			if (len > 0 && temp_path[len - 1] != '/')
+			len = strlen(pathtok[i]);
+			if (tokens[0][0] == '/' && access(tokens[0], X_OK) == 0)
+				/* if input starts with /, execute with absolute path */
 			{
-				strcat(temp_path, "/"); /* only adds / if not already there */
+				execve(tokens[0], tokens, environ);
+				perror("Execution error");
+				exit(1);
 			}
-			strcat(temp_path, tokens[0]); /* command added to end of path */
-
+			if (len > 0 && pathtok[i][len - 1] != '/')
+			{
+				strncpy(temp_path, pathtok[i], sizeof(temp_path) - 1); /* copies path */
+				strncat(temp_path, "/", sizeof(temp_path) - len - 1);
+				/* only adds / if not there already */
+			}
+			else
+			{
+				strncpy(temp_path, pathtok[i], sizeof(temp_path) - 1); /* copies path */
+			}
+			temp_path[sizeof(temp_path) - 1] = '\0'; /* null terminates */
+			strncat(temp_path, tokens[0], sizeof(temp_path) - strlen(temp_path) - 1); 
+			/* command added to end of path */
 			if (access(temp_path, X_OK) == 0) /* checks for executable permission */
 			{
 				execve(temp_path, tokens, environ);
