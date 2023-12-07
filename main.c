@@ -28,12 +28,7 @@ int main(void)
 	while (1)
 	{
 		printf("$ ");
-		read_size = getline(&inputbuff, &buffsize, stdin); /* take input from stdin and stores */
-
-		if (read_size <= 0)
-		{
-			continue;
-		}
+		getline(&inputbuff, &buffsize, stdin); /* take input from stdin and stores */
 
 		if (feof(stdin) != 0) /* checks for EoF condition */
 			break;
