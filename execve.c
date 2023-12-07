@@ -15,6 +15,7 @@ void forkandexec(char **pathtok, char **tokens)
 	int status;
 	int i = 0;
 	char temp_path[128];
+	size_t len;
 
 	cpid = fork();
 	if (cpid == -1)
@@ -24,13 +25,15 @@ void forkandexec(char **pathtok, char **tokens)
 	}
 	else if (cpid == 0)
 	{
-		i = 0;
-
 		while (pathtok[i] != NULL)
 		{
 			strncpy(temp_path, pathtok[i], sizeof(temp_path) - 1); /* copies path */
 			temp_path[sizeof(temp_path) - 1] = '\0'; /* null terminates */
-			strcat(temp_path, "/");
+			len = strlen(temp_path);
+			if (len > 0 && temp_path[len - 1] != '/')
+			{
+				strcat(temp_path, "/"); /* only adds / if not already there */
+			}
 			strcat(temp_path, tokens[0]); /* command added to end of path */
 
 			if (access(temp_path, X_OK) == 0) /* checks for executable permission */
@@ -41,9 +44,8 @@ void forkandexec(char **pathtok, char **tokens)
 			}
 			i++; /* increments to next element in path array */
 		}
-
-	fprintf(stderr, "Command not found: %s\n", tokens[0]);
-	exit(1);
+		fprintf(stderr, "Command not found: %s\n", tokens[0]);
+		exit(1);
 	}
 	else
 	{
