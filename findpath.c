@@ -20,6 +20,6 @@ char *findpath(char **env)
 		}
 		i++;
 	}
-
+	printf("PATH: %s\n", env[i]);
 	return (0);
 }
