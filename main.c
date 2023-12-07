@@ -15,7 +15,6 @@ int main(void)
 	char *path = NULL;
 	char **tokens = NULL;
 	char **pathtok = NULL;
-	ssize_t read_size;
 
 	path = findpath(environ);
 	pathtok = maketoken(path, ":");
