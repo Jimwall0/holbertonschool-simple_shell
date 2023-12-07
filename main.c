@@ -15,6 +15,7 @@ int main(void)
 	char *path = NULL;
 	char **tokens = NULL;
 	char **pathtok = NULL;
+	int j = 0;
 
 	path = findpath(environ);
 	pathtok = maketoken(path, ":");
@@ -26,8 +27,10 @@ int main(void)
 	}
 	while (1)
 	{
-		printf("$");
+		printf("blu ");
 		getline(&inputbuff, &buffsize, stdin); /* take input from stdin and stores */
+
+		printf("Input before tokenizing: %s\n", inputbuff);
 
 		if (feof(stdin) != 0) /* checks for EoF condition */
 			break;
@@ -40,6 +43,12 @@ int main(void)
 		}
 
 		tokens = maketoken(inputbuff, " "); /* tokenize input */
+
+		while (tokens[j] != NULL)
+		{
+			printf("Token %d: %s\n", j, tokens[j]);
+			j++;
+		}
 
 		forkandexec(pathtok, tokens);
 	}
