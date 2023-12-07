@@ -34,11 +34,15 @@ char **maketoken(char *str, char *delim)
 	{
 		cmpval = strcmp(temp, "\n"); /* checks to see if token is \n */
 		if (cmpval == 0) /* returns 0 if \n */
+		{
 			break;
-
-		tokens[i] = strdup(temp); /* copies tokens and places them in tokens array */
+		}
+		if (strcmp(temp, "") != 0) /* makes sure token is not just \n */
+		{
+			tokens[i] = strdup(temp); /* copies tokens and places them in array */
+			i++;
+		}
 		temp = strtok(NULL, delim); /* continues through string */
-		i++;
 	}
 
 	tokens[i] = NULL; /* NULL-terminate token array */
