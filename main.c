@@ -27,7 +27,7 @@ int main(void)
 	}
 	while (1)
 	{
-		printf("blu ");
+		printf("$ ");
 		getline(&inputbuff, &buffsize, stdin); /* take input from stdin and stores */
 
 		printf("Input before tokenizing: %s\n", inputbuff);
