@@ -15,6 +15,7 @@ int main(void)
 	char *path = NULL;
 	char **tokens = NULL;
 	char **pathtok = NULL;
+	ssize_t read_size;
 
 	path = findpath(environ);
 	pathtok = maketoken(path, ":");
@@ -27,7 +28,12 @@ int main(void)
 	while (1)
 	{
 		printf("$ ");
-		getline(&inputbuff, &buffsize, stdin); /* take input from stdin and stores */
+		read_size = getline(&inputbuff, &buffsize, stdin); /* take input from stdin and stores */
+
+		if (read_size <= 0)
+		{
+			continue;
+		}
 
 		if (feof(stdin) != 0) /* checks for EoF condition */
 			break;
