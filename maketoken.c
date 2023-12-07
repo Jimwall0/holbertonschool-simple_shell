@@ -45,8 +45,10 @@ char **maketoken(char *str, char *delim)
 
 	if (i >= 0 && tokens[i][strlen(tokens[i]) - 1] == '\n')
 		/* checks for \n at end of string */
+	{
 		tokens[i][strlen(tokens[i]) - 1] = '\0';
 		/* replaces it with null terminator */
+	}
 
 	return (tokens);
 }
