@@ -15,7 +15,6 @@ char **maketoken(char *str, char *delim)
 	size_t buffsize = 256;
 	char *temp = NULL;
 	char **tokens = malloc(buffsize * sizeof(char *));
-	int cmpval;
 	int i = 0;
 
 	if (str == NULL)
@@ -32,12 +31,8 @@ char **maketoken(char *str, char *delim)
 	temp = strtok(str, delim);
 	while (temp != NULL)
 	{
-		cmpval = strcmp(temp, "\n"); /* checks to see if token is \n */
-		if (cmpval == 0) /* returns 0 if \n */
-		{
-			break;
-		}
-		if (strcmp(temp, "") != 0) /* makes sure token is not just \n */
+		if (strcmp(temp, "") != 0 && strcmp(temp, "\n") != 0)
+			/* makes sure token is not empty or just \n */
 		{
 			tokens[i] = strdup(temp); /* copies tokens and places them in array */
 			i++;
