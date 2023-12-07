@@ -26,7 +26,7 @@ int main(void)
 	}
 	while (1)
 	{
-		printf("$ ");
+		printf("$");
 		getline(&inputbuff, &buffsize, stdin); /* take input from stdin and stores */
 
 		if (feof(stdin) != 0) /* checks for EoF condition */
