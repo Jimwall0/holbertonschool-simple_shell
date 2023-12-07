@@ -16,6 +16,8 @@ char **maketoken(char *str, char *delim)
 	char *temp = NULL;
 	char **tokens = malloc(buffsize * sizeof(char *));
 	int i = 0;
+	int j = 0;
+	int len;
 
 	if (str == NULL)
 	{
@@ -41,13 +43,14 @@ char **maketoken(char *str, char *delim)
 	}
 
 	tokens[i] = NULL; /* NULL-terminate token array */
-	i--; /* moves index to last valid string */
-
-	if (i >= 0 && tokens[i][strlen(tokens[i]) - 1] == '\n')
-		/* checks for \n at end of string */
+	
+	for (j = 0; j < i; j++)
 	{
-		tokens[i][strlen(tokens[i]) - 1] = '\0';
-		/* replaces it with null terminator */
+		len = strlen(tokens[j]);
+		if (len > 0 && tokens[j][len - 1] == '\n')
+		{
+			tokens[j][len - 1] = '\0';
+		}
 	}
 
 	return (tokens);
