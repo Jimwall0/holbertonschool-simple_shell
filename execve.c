@@ -14,7 +14,7 @@ void forkandexec(char **pathtok, char **tokens)
 	pid_t cpid;
 	int status;
 	int i = 0;
-	char temp_path[128];
+	char temp_path[256];
 
 	cpid = fork();
 	if (cpid == -1)
@@ -41,9 +41,9 @@ void forkandexec(char **pathtok, char **tokens)
 			}
 			i++; /* increments to next element in path array */
 		}
-
-	fprintf(stderr, "Command not found: %s\n", tokens[0]);
-	exit(1);
+		
+		fprintf(stderr, "Command not found: %s\n", tokens[0]);
+		exit(1);
 	}
 	else
 	{
