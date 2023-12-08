@@ -43,15 +43,11 @@ int main(void)
 
 		forkandexec(pathtok, tokens);
 
-		if (strcmp(inputbuff, "exit") != 0)
-		{
-			printf("$ ");
-		}
+		free_array(tokens);
+	}
 
 	free(inputbuff);
 	free_array(pathtok);
-
-	}
 
 	return (0);
 }
