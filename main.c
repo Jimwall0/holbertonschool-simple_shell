@@ -15,7 +15,7 @@ int main(void)
 	char *path = NULL;
 	char **tokens = NULL;
 	char **pathtok = NULL;
-
+	int firstinput = 1;
 	path = findpath(environ);
 	pathtok = maketoken(path, ":");
 
@@ -26,11 +26,20 @@ int main(void)
 	}
 	while (1)
 	{
+		if (!firstinput)
+		{
 		printf("$ ");
+		}
 		if (getline(&inputbuff, &buffsize, stdin) == -1) /* take input from stdin and stores */
 			break;
-		
+		if (!firstinput)
+		{
 		inputbuff[strcspn(inputbuff, "\n")] = '\0'; /* removes newline from input */
+		}
+		if (strspn(inputbuff, " \t\n") == strlen(inputbuff) || inputbuff[0] == '$')
+				{
+				continue; 
+				}
 
 		if (strcmp(inputbuff, "exit") == 0 || feof(stdin) != 0)
 		{
@@ -48,6 +57,7 @@ int main(void)
 		forkandexec(pathtok, tokens);
 
 		free_array(tokens);
+		firstinput = 0;
 	}
 
 	free(inputbuff);
