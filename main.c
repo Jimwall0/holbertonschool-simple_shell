@@ -51,5 +51,7 @@ int main(void)
 	free(inputbuff);
 	free_array(pathtok);
 
+	}
+
 	return (0);
 }
