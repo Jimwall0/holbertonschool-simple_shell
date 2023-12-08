@@ -30,14 +30,14 @@ int main(void)
 		if (getline(&inputbuff, &buffsize, stdin) == -1) /* take input from stdin and stores */
 			break;
 		inputbuff[strcspn(inputbuff, "\n")] = '\0'; /* removes newline from input */
-
-		if (feof(stdin) != 0) /* checks for EoF condition */
-			break;
 		
 		if (strcmp(inputbuff, "exit") == 0 || feof(stdin) != 0)
 		{
 			break; /* exit loop if 'exit' is entered as input */
 		}
+
+		if (feof(stdin) != 0) /* checks for EoF condition */
+			break;
 
 		tokens = maketoken(inputbuff, " "); /* tokenize input */
 
