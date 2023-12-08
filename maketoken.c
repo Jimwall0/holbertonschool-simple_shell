@@ -47,7 +47,7 @@ char **maketoken(char *str, char *delim)
 	for (j = 0; j < i; j++)
 	{
 		len = strlen(tokens[j]);
-		if (len > 0 && tokens[j][len - 1] == '\n')
+		if (len > 0 && (tokens[j][len - 1] == '\n' || tokens[j][len - 1] == '\r'))
 		{
 			tokens[j][len - 1] = '\0';
 		}
