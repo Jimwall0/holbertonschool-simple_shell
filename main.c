@@ -40,7 +40,7 @@ int main(void)
 		if (feof(stdin) != 0) /* checks for EoF condition */
 			break;
 
-		if (inputbuff[0] == '$')
+		if (strncmp(inputbuff, "$ ", 2) == 0)
 			continue;
 
 		tokens = maketoken(inputbuff, " "); /* tokenize input */
