@@ -57,5 +57,7 @@ int main(void)
 	free_array(pathtok);
 	free(path);
 
+	printf("\n");
+
 	return (0);
 }
