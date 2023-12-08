@@ -37,6 +37,7 @@ char **maketoken(char *str, char *delim)
 			/* makes sure token is not empty or just \n */
 		{
 			tokens[i] = strdup(temp); /* copies tokens and places them in array */
+			tokens[i][strlen(temp)] = '\0'; /* explicit null termination */
 			i++;
 		}
 		temp = strtok(NULL, delim); /* continues through string */
