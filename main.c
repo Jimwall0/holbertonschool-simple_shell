@@ -25,11 +25,18 @@ int main(void)
 	}
 	while (1)
 	{
+		ssize_t len;
+
 		printf("$ ");
 		if (getline(&inputbuff, &buffsize, stdin) == -1) /* take input from stdin and stores */
 			break;
 
-		inputbuff[strcspn(inputbuff, "\n")] = '\0'; /* removes newline from input */
+		/* inputbuff[strcspn(inputbuff, "\n")] = '\0'; removes newline from input */ 
+		len = strlen(inputbuff);
+		if (len > 0 && inputbuff[len - 1] == '\n')
+		{
+			inputbuff[len - 1] = '\0';
+		}
 
 		if (strspn(inputbuff, " \t\n") == strlen(inputbuff) || inputbuff[0] == '$')
 				{
