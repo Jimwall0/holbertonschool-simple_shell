@@ -31,6 +31,7 @@ void forkandexec(char **pathtok, char **tokens)
 			if (tokens[0][0] == '/' && access(tokens[0], X_OK) == 0)
 				/* if input starts with /, execute with absolute path */
 			{
+				printf("\n"); /* print newline before command execution */
 				execve(tokens[0], tokens, environ);
 				perror("Execution error");
 				exit(1);
@@ -62,6 +63,5 @@ void forkandexec(char **pathtok, char **tokens)
 	else
 	{
 		waitpid(cpid, &status, 0);
-		printf("\n"); /* next shell prompt printed on a new line */
 	}
 }
