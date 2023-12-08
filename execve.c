@@ -62,5 +62,6 @@ void forkandexec(char **pathtok, char **tokens)
 	else
 	{
 		waitpid(cpid, &status, 0);
+		printf("\n"); /* next shell prompt printed on a new line */
 	}
 }
