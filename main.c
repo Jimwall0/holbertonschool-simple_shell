@@ -27,12 +27,13 @@ int main(void)
 	while (1)
 	{
 		printf("$ ");
-		getline(&inputbuff, &buffsize, stdin); /* take input from stdin and stores */
-
-		if (feof(stdin) != 0) /* checks for EoF condition */
+		if (getline(&inputbuff, &buffsize, stdin) <= 0) /* take input from stdin and stores */
 			break;
 
 		inputbuff[strcspn(inputbuff, "\n")] = '\0'; /* removes newline from input */
+
+		if (feof(stdin) != 0) /* checks for EoF condition */
+			break;
 
 		if (strcmp(inputbuff, "exit") == 0)
 		{
