@@ -42,7 +42,11 @@ int main(void)
 		tokens = maketoken(inputbuff, " "); /* tokenize input */
 
 		forkandexec(pathtok, tokens);
-	}
+
+		if (strcmp(inputbuff, "exit") != 0)
+		{
+			printf("$ ");
+		}
 
 	free(inputbuff);
 	free_array(pathtok);
