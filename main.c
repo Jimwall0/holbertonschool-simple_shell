@@ -29,8 +29,9 @@ int main(void)
 		printf("$ ");
 		if (getline(&inputbuff, &buffsize, stdin) == -1) /* take input from stdin and stores */
 			break;
-		inputbuff[strcspn(inputbuff, "\n")] = '\0'; /* removes newline from input */
 		
+		inputbuff[strcspn(inputbuff, "\n")] = '\0'; /* removes newline from input */
+
 		if (strcmp(inputbuff, "exit") == 0 || feof(stdin) != 0)
 		{
 			break; /* exit loop if 'exit' is entered as input */
@@ -38,6 +39,9 @@ int main(void)
 
 		if (feof(stdin) != 0) /* checks for EoF condition */
 			break;
+
+		if (inputbuff[0] == '$')
+			continue;
 
 		tokens = maketoken(inputbuff, " "); /* tokenize input */
 
