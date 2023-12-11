@@ -51,7 +51,7 @@ int main(void)
 
 		if (interactive_mode && (strcmp(inputbuff, "exit") == 0 || feof(stdin) != 0))
 		{
-			break; /* exit loop if 'exit' is entered as input */
+			exit(0); /* exit loop if 'exit' is entered as input */
 		}
 
 		if (feof(stdin) != 0) /* checks for EoF condition */
