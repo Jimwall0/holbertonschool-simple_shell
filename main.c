@@ -49,14 +49,9 @@ int main(void)
 				continue; 
 				}
 
-		if (interactive_mode && (strcmp(inputbuff, "exit") == 0 || feof(stdin) != 0))
+		if (interactive_mode && (strcmp(inputbuff, "exit") == 0 || feof(stdin) != 0)) /* EoF condition */
 		{
-			exit(0); /* exit loop if 'exit' is entered as input */
-		}
-
-		if (feof(stdin) != 0) /* checks for EoF condition */
-		{
-			break;
+			break; /* exit loop if 'exit' is entered as input */
 		}
 
 		tokens = maketoken(inputbuff, " "); /* tokenize input */

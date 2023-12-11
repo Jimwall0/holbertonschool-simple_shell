@@ -17,6 +17,13 @@ void forkandexec(char **pathtok, char **tokens)
 	char temp_path[256];
 	size_t len;
 
+	if (strcmp(tokens[0], "exit") == 0)
+	{
+		free_array(tokens);
+		free_array(pathtok);
+		exit(0);
+	}
+
 	cpid = fork();
 	if (cpid == -1)
 	{
