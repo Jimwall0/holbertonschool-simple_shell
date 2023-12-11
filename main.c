@@ -56,6 +56,12 @@ int main(void)
 
 		tokens = maketoken(inputbuff, " "); /* tokenize input */
 
+		if (strcmp(tokens[0], "exit") == 0)
+		{
+			free_array(tokens);
+			break;
+		}
+
 		forkandexec(pathtok, tokens);
 
 		free_array(tokens);
