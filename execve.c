@@ -33,7 +33,7 @@ void forkandexec(char **pathtok, char **tokens)
 			{
 				execve(tokens[0], tokens, environ);
 				perror("Execution error");
-				exit(1);
+				exit(2);
 			}
 			if (len > 0 && pathtok[i][len - 1] != '/')
 			{
@@ -52,15 +52,20 @@ void forkandexec(char **pathtok, char **tokens)
 			{
 				execve(temp_path, tokens, environ);
 				perror("Execution error");
-				exit(1); /*in case of execve failure */
+				exit(2); /*in case of execve failure */
 			}
 			i++; /* increments to next element in path array */
 		}
 		fprintf(stderr, "Command not found: %s\n", tokens[0]);
-		exit(1);
+		exit(2);
 	}
 	else
 	{
 		waitpid(cpid, &status, 0);
+		if (WEXITSTATUS(status))
+		{
+			exit(WEXITSTATUS(status));
+		}
 	}
 }
+

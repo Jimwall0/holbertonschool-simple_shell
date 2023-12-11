@@ -59,7 +59,7 @@ int main(void)
 		if (strcmp(tokens[0], "exit") == 0)
 		{
 			free_array(tokens);
-			break;
+			break; /* exit loop without executing external command */
 		}
 
 		forkandexec(pathtok, tokens);
