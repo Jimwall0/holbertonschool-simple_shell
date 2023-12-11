@@ -64,10 +64,13 @@ void forkandexec(char **pathtok, char **tokens)
 			i++; /* increments to next element in path array */
 		}
 		fprintf(stderr, "Command not found: %s\n", tokens[0]);
-		exit(1);
+		free_array(tokens);
+		free_array(pathtok);
+		exit(0);
 	}
 	else
 	{
 		waitpid(cpid, &status, 0);
+		exit(0);
 	}
 }
