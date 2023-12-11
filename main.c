@@ -50,7 +50,7 @@ int main(void)
 				}
 
 		if (interactive_mode && (strcmp(inputbuff, "exit") == 0 || feof(stdin) != 0)) /* EoF condition */
-		{
+	{
 			break; /* exit loop if 'exit' is entered as input */
 		}
 
