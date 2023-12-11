@@ -26,8 +26,14 @@ int main(void)
 	while (1)
 	{
 		ssize_t len;
+		int interactive_mode = isatty(STDIN_FILENO); /* non-0 return indicates interactive */
 
-		printf("$ ");
+		if (interactive_mode)
+		{
+			printf("$ ");
+			fflush(stdout); /* print prompt immediately */
+		}
+
 		if (getline(&inputbuff, &buffsize, stdin) == -1) /* take input from stdin and stores */
 			break;
 
@@ -43,7 +49,7 @@ int main(void)
 				continue; 
 				}
 
-		if (strcmp(inputbuff, "exit") == 0 || feof(stdin) != 0)
+		if (interactive_mode && (strcmp(inputbuff, "exit") == 0 || feof(stdin) != 0))
 		{
 			break; /* exit loop if 'exit' is entered as input */
 		}
@@ -63,8 +69,6 @@ int main(void)
 	free(inputbuff);
 	free_array(pathtok);
 	free(path);
-
-	printf("\n");
 
 	return (0);
 }
