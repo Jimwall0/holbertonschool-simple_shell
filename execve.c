@@ -62,7 +62,7 @@ void forkandexec(char **pathtok, char **tokens)
 					{
 						exit(WEXITSTATUS(status));
 					}
-					return; /* exit function if command not found */
+					return; /* function if command not found */
 				}
 			}
 
