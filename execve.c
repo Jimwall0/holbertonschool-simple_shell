@@ -71,5 +71,5 @@ void forkandexec(char **pathtok, char **tokens)
 	fprintf(stderr, "./hsh: 1: %s: not found\n", tokens[0]);
 	free_array(tokens);
 	free_array(pathtok);
-	exit(2);
+	exit(127);
 }
