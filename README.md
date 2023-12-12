@@ -7,8 +7,9 @@ This is a project for replicating the sh command. What this program does is prom
 - main.c
 - maketoken.c
 - shell.h
+
 ## Flow Chart
-(missing link)
+![Ugly Flow Chart](https://github.com/Jimwall0/holbertonschool-simple_shell/assets/127359266/00e7f1e8-fab0-4d47-ad91-d67ac6d52b27)
 ## Credits
 - Ryan Donaldson
 - Tsim Muaj Yang
